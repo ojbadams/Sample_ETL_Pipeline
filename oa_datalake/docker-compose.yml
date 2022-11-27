@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+  mariadb:
+    image: oa/datalake:latest
+    ports:
+      - '3306:3306'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    network_mode: "host"
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
