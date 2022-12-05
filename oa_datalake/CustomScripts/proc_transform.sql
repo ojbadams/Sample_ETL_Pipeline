@@ -9,7 +9,12 @@ SELECT
     CAST(lat as FLOAT),
     CAST(lon as FLOAT),
     id
-FROM Staging.locations;
+FROM Staging.locations
+ON DUPLICATE KEY UPDATE
+ commonName = VALUES(commonName),
+ lat = VALUES(lat),
+ lon = VALUES(lat),
+ id = VALUES(id);
 
 TRUNCATE Staging.locations;
 
