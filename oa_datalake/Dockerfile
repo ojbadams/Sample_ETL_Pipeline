@@ -1,8 +1,3 @@
-FROM bitnami/mariadb:10.10
+FROM docker.io/bitnami/mongodb:6.0
 
-COPY CustomScripts/init.sql /docker-entrypoint-initdb.d
-COPY CustomScripts/proc_transform.sql /docker-entrypoint-initdb.d
-
-USER 1001
-ENTRYPOINT [ "/opt/bitnami/scripts/mariadb/entrypoint.sh" ]
-CMD [ "/opt/bitnami/scripts/mariadb/run.sh" ]
+COPY ./CustomScripts/init_mongo.js /docker-entrypoint-initdb.d/mongo-init.js

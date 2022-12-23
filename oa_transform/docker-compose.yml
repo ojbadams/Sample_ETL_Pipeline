@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  python:
+    tty: true # Enables debugging capabilities when attached to this container.
+    image: oa/extract:latest
+    network_mode: "host"
+    ports:
+      - 8000:8000

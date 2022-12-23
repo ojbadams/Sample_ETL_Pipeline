@@ -1,29 +1,25 @@
 """ Quick script that makes an API call to TFL api and commits data to MySQL """
-from datatransformer import get_data, json_transformer
-from simplemysql import SimpleMysql
+from datetime import datetime
 import pandas as pd
+from pymongo import MongoClient
+from datatransformer import get_data
+
 
 def get_bike_location_data() -> pd.DataFrame:
     """ Function to get Data from TFL """
     url = "https://api.tfl.gov.uk/BikePoint/"
 
     data = get_data.make_request(url)
-    data, pk = json_transformer.JSONTransform(data,
-                    ['commonName',
-                        'lat', 'lon', 'id'],
-                        ["id"])
-
+    data = {"inserted_date" : datetime.now(), "data" : data}
     return data
 
-def start_mysql_connection_and_save(data: pd.DataFrame):
-    """ Start Connection to Commit data to Staging """
-    conn = SimpleMysql(user="python", passwd = "12345", db="Staging", charset="utf8")
-    conn.connect()
-    conn.insertBatch("locations", data.to_dict(orient="records"))
-    conn.callProcedure("proc_transform")
-    conn.commit()
-
+def save_data_to_mongo(data):
+    """ Saves API output to MongoDB """
+    client = MongoClient("localhost", 27017, username="root", password="password")
+    data_base = client["staging"]
+    collection = data_base["locations"]
+    collection.insert_one(data)
 
 if __name__ == "__main__":
     site_data = get_bike_location_data()
-    start_mysql_connection_and_save(site_data)
+    save_data_to_mongo(site_data)

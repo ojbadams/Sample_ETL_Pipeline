@@ -1,17 +1,12 @@
-version: '2.1'
+version: '2'
 
 services:
-  mariadb:
-    image: oa/datalake:latest
+  mongodb:
+    image: oa/document:latest
     ports:
-      - '3306:3306'
+      - "27017:27017"
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    network_mode: "host"
-    healthcheck:
-      test: ['CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh']
-      interval: 15s
-      timeout: 5s
-      retries: 6
-    volumes:
-      - ../data:/bitnami/mariadb
+      - MONGODB_USERNAME=user
+      - MONGODB_PASSWORD=password123
+      - MONGODB_ROOT_USER=root
+      - MONGODB_ROOT_PASSWORD=password
