@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard</title>
+  
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+  <link href=" {{url_for('static', filename='css/ruang-admin.css') }}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+  <div id="wrapper"> 
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+      <div class="sidebar-brand d-flex align-items-center justify-content-center">
+        Dashboard
+      </div>
+    <li class="nav-item active">
+      <a class="nav-link" href= "{{ url_for('home') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+      <a class="nav-link" href= "{{ url_for('settings') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Settings</span></a> 
+      <a class="nav-link" href= "{{ url_for('login') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Logout</span></a>       
+    </li>
+  </ul>
+    
+    <!-- Sidebar -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+
+        <br>
+
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+          <div class="col-lg-6">
+            <div class="card mb-4">
+              <br>
+              <p padding-left=1000px>     Nothing Here </p>  
+            </div>
+          </div>        
+          <script src="vendor/jquery/jquery.min.js"></script>
+          <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+          <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+          <script src="js/ruang-admin.min.js"></script>
+          <script src="vendor/chart.js/Chart.min.js"></script>
+          <script src="js/demo/chart-area-demo.js"></script>  
+</body>
+
+</html>

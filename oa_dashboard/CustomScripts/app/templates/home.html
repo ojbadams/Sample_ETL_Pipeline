@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard</title>
+  
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+  <link href=" {{url_for('static', filename='css/ruang-admin.css') }}" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+  integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+  integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+  crossorigin=""></script>
+
+</head>
+
+<body id="page-top">
+  <div id="wrapper"> 
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+        <div class="sidebar-brand d-flex align-items-center justify-content-center">
+          Dashboard
+        </div>
+      <li class="nav-item active">
+        <a class="nav-link" href= "{{ url_for('login') }}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a> 
+      </li>
+      <br>
+      <form action = "/refresh" method = "post">
+        <input type="submit" value = "Clear Refresh" class = "btn btn-primary">
+      </form>
+    </ul>
+    
+    <!-- Sidebar -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+          <br>
+
+          <div id = "div1"> </div>
+
+
+
+          <div class = "row">
+              <!-- Area Chart -->
+              <div class="col-xl11 col-lg-11">
+                <div class="card mb-1">
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Daily Site Values</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <canvas id="panel_arrivals" height="230px" width="1000px"> 
+                        <div id="map"></div>
+                        <style>
+                          #map { height: 180px; }
+                      </style>
+                      </canvas>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class = "row">
+              <div class="col-lg-3">
+                <div class="card mb-4">
+                    <!--<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary"> System Usage </h6>
+                    </div>
+                    <div class="card-body">
+                      <ul>
+                        <li>A date can be selected using the date picker in the grid above</li>
+                        <li>Press the "Get Static Analysis" button to get predictions for arrivals and site capacities for either current date or future date</li>
+                        <li>Realtime Monitoring option can be turned on for the current day only and will update every 15 minutes</li>
+                        <li>Predictions and Realtime information will be saved for each day</li> 
+                      </ul>
+                    </div> -->
+                    
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+
+
+ <script>
+
+  var map = L.map('map').setView([51.505, -0.09], 13);
+
+  L.tileLayer("https://tile.openstreetmap.org/7/63/42.png", {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+</script>
+</body>
+
+</html>

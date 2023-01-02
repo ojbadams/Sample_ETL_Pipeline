@@ -1,0 +1,80 @@
+<html> 
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+    <script src="{{ url_for('static', filename='node_modules/leaflet.glify/dist/glify-browser.js') }}"></script>
+    <script src="{{ url_for('static', filename='node_modules/leaflet-glify-layer/dist/leaflet-glify-layer.js') }}"></script>
+</head>
+
+<div id="map"></div>
+
+<style>
+    #map { height: 1000px; width: 1000px; }
+</style>
+
+<script>
+    var map = L.map('map').setView([51.509, -0.118], 10);
+    var locations = {{ locations_list|tojson }}
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 50,
+        attribution: '© OpenStreetMap', 
+        noWrap: true
+    }).addTo(map);
+
+    // var myRenderer = L.canvas({ padding: 0.1 }); 
+    
+    async function callApi(url){
+        const response = await fetch(url);
+        const data = await response.json();
+
+        return data;
+    }
+
+    const lyr = L.glify.layer({
+        geojson : locations,
+        type: {
+            points : {locations}
+
+        }
+    });
+
+    lyr.addTo(map);
+
+
+    function circleClick(e) {
+        var clickedCircle = e.target;
+
+        var lat = clickedCircle["_latlng"]["lat"]
+        var lng = clickedCircle["_latlng"]["lng"]
+
+       /* let response = fetch("http://127.0.0.1:5000/get_stop_name?lat="+lat+"&lng="+lng).then(function(result){ return result }) */
+        
+        fetch("http://127.0.0.1:5000/get_stop_name?lat="+lat+"&lng="+lng)
+        .then(response => response.text())
+        .then(data => {
+            console.log(data)
+            clickedCircle.bindPopup(data).openPopup();
+        });
+    }
+
+    // for (var i = 0; i < locations.length; i++){
+    //     var circleMarker = L.circleMarker([locations[i][1], locations[i][2]], {
+    //     renderer: myRenderer, 
+    //     color: '#3388ff', 
+    //     clickable: true
+    //     }).addTo(map)
+    //         .setRadius(0.5)
+    //         .on("click", circleClick)
+    // }
+
+
+</script>
+
+
+</html>
