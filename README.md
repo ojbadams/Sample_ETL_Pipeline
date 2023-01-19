@@ -48,8 +48,6 @@ In MariaDB container check the core database
 - simplemysql package https://github.com/bitnami/containers
 
 ## Next Steps
-- Remove PK Errors in MariaDB
 - Add Further Functionality (multiple tables in MariaDB)
 - Automate updating of data feed (Cronjobs/MariaDB events)
 - Creating Reporting environment
-- Creation of Docker network & Persisted volume

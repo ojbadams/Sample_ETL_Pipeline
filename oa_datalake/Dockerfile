@@ -1,5 +1,8 @@
 FROM bitnami/mariadb:10.10
 
+USER root
+RUN install_packages vim
+
 COPY CustomScripts/init.sql /docker-entrypoint-initdb.d
 COPY CustomScripts/proc_transform.sql /docker-entrypoint-initdb.d
 
